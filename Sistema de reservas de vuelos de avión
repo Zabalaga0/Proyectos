@@ -1,0 +1,75 @@
+# Sistema de reservas de vuelos
+
+def calcularIVA(precio):
+    return precio * 0.13
+
+def mostrarCuotas(total):
+    print("Cada cuota = ", total/3, "Bs")
+
+registro = 1   # valor inicial distinto de 0 para entrar al while
+
+while registro != 0:
+    registro = int(input("Ingrese la cantidad de personas que reservarán su vuelo (0 para salir): "))
+
+    if registro == 0:
+        print("Programa finalizado. ¡Gracias!")
+        break  # salir del bucle
+
+    brasil = 0
+    bolivia = 0
+    peru = 0
+    chile = 0
+    montoTotalRecaudado = 0
+
+    for i in range(1, registro+1):
+        nombre = input("Ingrese el NOMBRE de la persona: ")
+        destino = input("Ingrese el DESTINO: ")
+
+        if destino == "Brasil":
+            brasil += 1
+        elif destino == "Bolivia":
+            bolivia += 1
+        elif destino == "Peru":
+            peru += 1
+        elif destino == "Chile":
+            chile += 1
+        else:
+            print("Ningun destino ingresado...")
+
+        try:
+            edad = int(input("Ingrese la EDAD de la persona: "))
+            precioDeVuelo = float(input("Ingrese el PRECIO del vuelo: "))
+        except ValueError:
+            print("Ingrese un número válido!")
+            continue   # vuelve a pedir datos para esta persona
+
+        if edad >= 18:
+            print("Es mayor de edad: PUEDE VIAJAR")
+        else:
+            print("Es menor de edad: NO PUEDE VIAJAR SIN PERMISO NOTARIAL!")
+
+        IVA = calcularIVA(precioDeVuelo)
+        precioTotal = precioDeVuelo + IVA
+
+        montoTotalRecaudado += precioTotal
+
+        print("--------------------")
+        print("Costo de Vuelo = ", precioDeVuelo)
+        print("IVA = ", IVA)
+        print("TOTAL a PAGAR = ", precioTotal, "Bs")
+        mostrarCuotas(precioTotal)
+        print("--------------------\n")
+        print("*******************************************************")
+
+    # Reporte final
+    print("A BRASIL irán", brasil, "personas.")
+    print("A BOLIVIA irán", bolivia, "personas.")
+    print("A PERU irán", peru, "personas.")
+    print("A CHILE irán", chile, "personas.")
+    print("EL MONTO TOTAL RECAUDADO ES: ", montoTotalRecaudado)
+
+    # Preguntar si desea continuar
+    pregunta = int(input("\n¿Desea ingresar otra tanda de personas? (0=no / 1=si): "))
+    if pregunta == 0:
+        print("Programa finalizado. ¡Gracias!")
+        break
